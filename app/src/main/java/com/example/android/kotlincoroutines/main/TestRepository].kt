@@ -5,13 +5,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 class TestRepository {
-    companion object {
-        var i = 0
-    }
-    suspend fun getValue(): String {
+
+    suspend fun getValue(count: String): String {
         return withContext(Dispatchers.IO) {
             delay(1500)
-            "[keep clicking] Hello from suspend function ${i++}"
+            "[keep clicking] Hello from suspend function $count"
         }
     }
 }

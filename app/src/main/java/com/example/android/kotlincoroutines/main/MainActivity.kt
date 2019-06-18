@@ -14,8 +14,10 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private var i = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        var i = 0
         super.onCreate(savedInstanceState)
 
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -47,25 +49,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         ViewModelProviders.of(this).get(MainViewModel::class.java).apply {
-            presenter.view = object : View {
-                override suspend fun showValue(value: String) {
-                    textView.text = value
-                }
-            }
+//            presenter.view = object : View {
+//                override suspend fun showValue(value: String) {
+//                    textView.text = value
+//                }
+//            }
 
-//            presenter.data.observe(this@MainActivity, Observer {
-//                textView.text = it
-//            })
+            // NOTE: create presenter.view or observe presenter.data
+
+            presenter.data.observe(this@MainActivity, Observer {
+                textView.text = it
+            })
 
             presenter.progressing.observe(this@MainActivity, Observer { isProgress ->
                 spinner.visibility = if (isProgress) android.view.View.VISIBLE else android.view.View.GONE
             })
 
             textView.setOnClickListener {
-                second.text = "thx ${i++}"
+                second.text = "thx ${++i}"
                 spinner.visibility = android.view.View.VISIBLE
                 viewModelScope.launch {
-                    presenter.onShow()
+                    presenter.onShow(i.toString())
                 }
             }
         }

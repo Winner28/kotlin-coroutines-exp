@@ -11,9 +11,9 @@ class TestPresenter(var view: View?, val rep: TestRepository) {
     val data: LiveData<String> get() = _data
     val progressing: LiveData<Boolean> get() = _progressing
 
-    suspend fun onShow() {
+    suspend fun onShow(count: String) {
         _progressing.value = true
-        _data.value = rep.getValue()
+        _data.value = rep.getValue(count)
         _progressing.value = false
     }
 }
