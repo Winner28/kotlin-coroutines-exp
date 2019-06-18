@@ -53,10 +53,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            presenter.data.observe(this@MainActivity, Observer {
-                textView.text = it
-                spinner.visibility = android.view.View.GONE
-            })
+//            presenter.data.observe(this@MainActivity, Observer {
+//                textView.text = it
+//            })
 
             presenter.progressing.observe(this@MainActivity, Observer { isProgress ->
                 spinner.visibility = if (isProgress) android.view.View.VISIBLE else android.view.View.GONE
